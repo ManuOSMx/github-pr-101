@@ -1,60 +1,60 @@
 # GitHub + Pull Requests 101
 
-This guide explains the basic workflow for collaborating on GitHub with Git and pull requests (PRs).
+Esta guía explica el flujo de trabajo básico para colaborar en GitHub con Git y pull requests (PR).
 
-## 1. The basic idea
+## 1. La idea básica
 
-- **Git** tracks changes to files on your computer.
-- **GitHub** hosts Git repositories online and adds collaboration tools.
-- A **branch** is an independent line of work.
-- A **commit** is a saved checkpoint in Git history.
-- A **pull request** proposes merging one branch into another, usually `main`.
+- **Git** realiza un seguimiento de los cambios en los archivos de tu computadora.
+- **GitHub** aloja repositorios de Git en línea y agrega herramientas de colaboración.
+- Una **rama** (`branch`) es una línea de trabajo independiente.
+- Un **commit** es un punto de control guardado en el historial de Git.
+- Un **pull request** propone combinar una rama con otra, normalmente `main`.
 
-The typical workflow is:
+El flujo de trabajo típico es:
 
 ```text
-clone → create a branch → edit files → commit → push → open a PR
-      → review → update → merge
+clonar → crear una rama → editar archivos → hacer commit → hacer push → abrir un PR
+         → revisar → actualizar → combinar
 ```
 
-## 2. One-time setup
+## 2. Configuración inicial
 
-Install Git, then configure your identity:
+Instala Git y configura tu identidad:
 
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
+git config --global user.name "Tu Nombre"
+git config --global user.email "tu@ejemplo.com"
 ```
 
-Authenticate with GitHub using either GitHub CLI:
+Autentícate en GitHub usando GitHub CLI:
 
 ```bash
 gh auth login
 ```
 
-or SSH credentials configured for your GitHub account.
+o configura credenciales SSH para tu cuenta de GitHub.
 
-## 3. Get a repository
+## 3. Obtener un repositorio
 
-On GitHub, open the repository and select **Code → Local → HTTPS** or **SSH**. Then clone it:
+En GitHub, abre el repositorio y selecciona **Code → Local → HTTPS** o **SSH**. Después, clónalo:
 
 ```bash
 git clone https://github.com/OWNER/REPOSITORY.git
 cd REPOSITORY
 ```
 
-Check the repository state:
+Comprueba el estado del repositorio:
 
 ```bash
 git status
 git remote -v
 ```
 
-`origin` is the usual name for the GitHub repository you cloned.
+`origin` es el nombre habitual del repositorio de GitHub que clonaste.
 
-## 4. Start work on a branch
+## 4. Comenzar a trabajar en una rama
 
-Do not normally work directly on `main`. First update it, then create a descriptive branch:
+Normalmente no debes trabajar directamente en `main`. Primero actualízala y luego crea una rama descriptiva:
 
 ```bash
 git switch main
@@ -62,7 +62,7 @@ git pull origin main
 git switch -c fix/improve-readme
 ```
 
-Common branch names include:
+Algunos nombres comunes para ramas son:
 
 ```text
 feature/add-search
@@ -70,103 +70,103 @@ fix/login-error
 docs/update-installation
 ```
 
-Keep each branch focused on one change.
+Mantén cada rama enfocada en un solo cambio.
 
-## 5. Make and commit changes
+## 5. Hacer cambios y commits
 
-Edit files, then inspect what changed:
+Edita los archivos y revisa qué cambió:
 
 ```bash
 git status
 git diff
 ```
 
-Stage the files you want to include:
+Prepara los archivos que quieras incluir:
 
 ```bash
 git add README.md
-# Or stage all intended changes:
+# O prepara todos los cambios previstos:
 git add .
 ```
 
-Create a clear commit:
+Crea un commit claro:
 
 ```bash
 git commit -m "Improve installation instructions"
 ```
 
-A good commit message says what the commit does. Commit related changes together, and avoid mixing unrelated cleanup into the same commit.
+Un buen mensaje de commit explica qué hace el commit. Agrupa los cambios relacionados y evita mezclar tareas de limpieza no relacionadas en el mismo commit.
 
-## 6. Push your branch
+## 6. Hacer push de tu rama
 
-The first push connects your local branch to its GitHub branch:
+El primer push conecta tu rama local con su rama en GitHub:
 
 ```bash
 git push -u origin fix/improve-readme
 ```
 
-After that, this is usually enough:
+Después, normalmente bastará con:
 
 ```bash
 git push
 ```
 
-## 7. Open a pull request
+## 7. Abrir un pull request
 
-On GitHub:
+En GitHub:
 
-1. Open the repository.
-2. Select **Compare & pull request** for your pushed branch.
-3. Confirm the base branch is `main`.
-4. Add a useful title.
-5. Explain what changed and why.
-6. Include testing steps or screenshots when useful.
-7. Request reviewers.
+1. Abre el repositorio.
+2. Selecciona **Compare & pull request** para la rama que subiste.
+3. Confirma que la rama base sea `main`.
+4. Añade un título útil.
+5. Explica qué cambió y por qué.
+6. Incluye los pasos de prueba o capturas de pantalla cuando sea útil.
+7. Solicita revisores.
 
-You can also use GitHub CLI:
+También puedes usar GitHub CLI:
 
 ```bash
 gh pr create --base main --head fix/improve-readme
 ```
 
-### A useful PR description
+### Un ejemplo de descripción de PR
 
 ```markdown
-## What changed
-- Updated the installation instructions.
+## Qué cambió
+- Se actualizaron las instrucciones de instalación.
 
-## Why
-New contributors were missing the authentication step.
+## Por qué
+A los nuevos colaboradores les faltaba el paso de autenticación.
 
-## Testing
-- Read through the commands on macOS and Linux.
+## Pruebas
+- Se revisaron los comandos en macOS y Linux.
 ```
 
-## 8. Review and update the PR
+## 8. Revisar y actualizar el PR
 
-Reviewers may:
+Los revisores pueden:
 
-- Approve the PR.
-- Leave comments or request changes.
-- Ask questions.
+- Aprobar el PR.
+- Dejar comentarios o solicitar cambios.
+- Hacer preguntas.
 
-Make requested changes on the same local branch:
+Realiza los cambios solicitados en la misma rama local:
 
 ```bash
 git status
-# edit files
+# edita los archivos
 git add path/to/file
 git commit -m "Address review feedback"
 git push
 ```
 
-The PR updates automatically when you push more commits to its branch.
+El PR se actualiza automáticamente cuando haces push de nuevos commits a su rama.
 
-Before asking for another review, check the PR's status checks and resolve open conversations.
+Antes de solicitar otra revisión, comprueba el estado de las verificaciones del PR y resuelve las conversaciones abiertas.
 
-## 9. Keep your branch current
+## 9. Mantener actualizada tu rama
 
-If `main` changes while your PR is open:
+Si `main` cambia mientras tu PR está abierto:
 
 ```bash
 git switch main
@@ -176,14 +176,14 @@ git merge main
 git push
 ```
 
-If Git reports conflicts:
+Si Git informa de conflictos:
 
-1. Open each conflicted file.
-2. Remove the conflict markers: `<<<<<<<`, `=======`, and `>>>>>>>`.
-3. Keep the correct final content.
-4. Stage the resolved files.
-5. Finish the merge commit.
-6. Run tests and push.
+1. Abre cada archivo en conflicto.
+2. Elimina los marcadores de conflicto: `<<<<<<<`, `=======` y `>>>>>>>`.
+3. Conserva el contenido final correcto.
+4. Prepara los archivos resueltos.
+5. Finaliza el commit de merge.
+6. Ejecuta las pruebas y haz push.
 
 ```bash
 git add path/to/resolved-file
@@ -191,17 +191,17 @@ git commit
 git push
 ```
 
-Some teams use rebase instead of merge to update a branch. Follow the repository's contribution guidelines before rewriting history.
+Algunos equipos usan rebase en lugar de merge para actualizar una rama. Consulta las pautas de contribución del repositorio antes de reescribir el historial.
 
-## 10. Merge the PR
+## 10. Combinar el PR
 
-Once the PR is approved and checks pass, a maintainer merges it on GitHub. GitHub may offer:
+Cuando el PR esté aprobado y las verificaciones hayan pasado, un mantenedor lo combina en GitHub. GitHub puede ofrecer:
 
-- **Merge commit**: preserves all branch commits and adds a merge commit.
-- **Squash and merge**: combines the PR into one commit.
-- **Rebase and merge**: applies the commits directly on the base branch.
+- **Merge commit**: conserva todos los commits de la rama y agrega un commit de merge.
+- **Squash and merge**: combina el PR en un solo commit.
+- **Rebase and merge**: aplica los commits directamente sobre la rama base.
 
-Use the option preferred by the project. After merging:
+Usa la opción preferida por el proyecto. Después de combinar el PR:
 
 ```bash
 git switch main
@@ -209,41 +209,41 @@ git pull origin main
 git branch -d fix/improve-readme
 ```
 
-If the remote branch is not deleted automatically:
+Si la rama remota no se elimina automáticamente:
 
 ```bash
 git push origin --delete fix/improve-readme
 ```
 
-## 11. Frequently used commands
+## 11. Comandos usados con frecuencia
 
-| Command | Purpose |
+| Comando | Propósito |
 | --- | --- |
-| `git status` | Show the current branch and changed files |
-| `git switch main` | Move to the `main` branch |
-| `git switch -c branch-name` | Create and switch to a branch |
-| `git pull` | Download and integrate remote changes |
-| `git add file` | Stage a file for the next commit |
-| `git diff` | Show unstaged changes |
-| `git diff --staged` | Show staged changes |
-| `git commit -m "message"` | Create a commit |
-| `git push` | Upload commits to GitHub |
-| `git log --oneline` | View compact commit history |
-| `git branch` | List local branches |
-| `gh pr status` | Show your PR status with GitHub CLI |
+| `git status` | Muestra la rama actual y los archivos modificados |
+| `git switch main` | Cambia a la rama `main` |
+| `git switch -c branch-name` | Crea una rama y cambia a ella |
+| `git pull` | Descarga e integra cambios remotos |
+| `git add file` | Prepara un archivo para el siguiente commit |
+| `git diff` | Muestra los cambios que aún no están preparados |
+| `git diff --staged` | Muestra los cambios preparados |
+| `git commit -m "message"` | Crea un commit |
+| `git push` | Sube commits a GitHub |
+| `git log --oneline` | Muestra un historial de commits compacto |
+| `git branch` | Enumera las ramas locales |
+| `gh pr status` | Muestra el estado de tus PR con GitHub CLI |
 
-## 12. Good habits
+## 12. Buenas prácticas
 
-- Pull the latest `main` before starting new work.
-- Use a branch for every feature, fix, or documentation change.
-- Keep commits and PRs small enough to review.
-- Write PR descriptions for the person reviewing your work.
-- Run tests and linters before opening or updating a PR.
-- Never commit passwords, API keys, tokens, or private certificates.
-- Do not force-push a shared branch.
-- Read `CONTRIBUTING.md` and repository-specific instructions.
+- Descarga la última versión de `main` antes de comenzar un trabajo nuevo.
+- Usa una rama para cada funcionalidad, corrección o cambio de documentación.
+- Mantén los commits y PR lo suficientemente pequeños para facilitar la revisión.
+- Escribe las descripciones de PR pensando en la persona que revisará tu trabajo.
+- Ejecuta las pruebas y los linters antes de abrir o actualizar un PR.
+- Nunca subas contraseñas, claves API, tokens ni certificados privados.
+- No hagas force-push en una rama compartida.
+- Lee `CONTRIBUTING.md` y las instrucciones específicas del repositorio.
 
-## Quick reference
+## Referencia rápida
 
 ```bash
 git clone https://github.com/OWNER/REPOSITORY.git
@@ -252,17 +252,17 @@ git switch main
 git pull origin main
 git switch -c feature/my-change
 
-# edit files
+# edita los archivos
 git status
 git diff
 git add .
 git commit -m "Describe the change"
 git push -u origin feature/my-change
 
-# Open the PR on GitHub, respond to review, then:
+# Abre el PR en GitHub, responde a la revisión y después:
 git push
 
-# After the PR is merged:
+# Después de combinar el PR:
 git switch main
 git pull origin main
 git branch -d feature/my-change
